@@ -25,6 +25,10 @@ def main():
     path = os.path.join(out_dir, "entry.txt")
     with open(path, "w", encoding="utf-8") as f:
         f.write(WORD)
+    # Read back what the sandbox actually holds: a truncated or
+    # mangled write must fail loudly here, not ship a bad entry.
+    with open(path, encoding="utf-8") as f:
+        assert f.read() == WORD, "entry.txt does not hold the chosen word"
 
 
 if __name__ == "__main__":
